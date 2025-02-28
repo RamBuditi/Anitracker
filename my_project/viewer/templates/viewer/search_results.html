@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #e91e63;
+            --background-color: #1a1a2e;
+            --card-color: #262640;
+            --text-color: #ffffff;
+            --nav-background: #2d1b36;
+            --accent-color: #ff2e63;
+            --filter-background: #2d1b36;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(156, 39, 176, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(233, 30, 99, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.3);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form input {
+            padding: 12px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background-color: #ff4081;
+        }
+
+        .filters-section {
+            background-color: var(--filter-background);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-check {
+            margin: 10px 0;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+        }
+
+        .form-check-label {
+            color: var(--text-color);
+        }
+
+        .toggle-arrow {
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card {
+            background-color: var(--card-color);
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+            background-color: var(--card-color);
+            color: var(--text-color);
+        }
+
+        .card-title {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pagination a {
+            padding: 8px 16px;
+            background-color: var(--card-color);
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+    </style>
+</head>
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-film"></i>Anitracker
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'top_anime' %}">Top Anime</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' user.id %}">Profile</a>
+                <a href="{% url 'users:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'users:login' %}">Login</a>
+                <a href="{% url 'users:signup' %}">Sign Up</a>
+            {% endif %}
+        </div>
+        <form class="search-form" method="GET" action="{% url 'search_results' %}" autocomplete="off">
+            <input type="text" name="q" placeholder="Search anime..." value="{{ search_query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+
+    <h2>Search Results for "{{ search_query }}"</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Filters -->
+            <form method="get" id="filterForm">
+                <input type="hidden" name="q" value="{{ search_query }}">
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>Age Rating</h4>
+                        <span class="toggle-arrow" id="ageRatingArrow" onclick="toggleFilters('ageRatingFilters')">▼</span>
+                    </div>
+                    <div id="ageRatingFilters">
+                        {% for rating in age_ratings %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="age_rating" value="{{ rating }}" id="age-rating-{{ rating }}" {% if rating in selected_age_ratings %}checked{% endif %}>
+                            <label class="form-check-label" for="age-rating-{{ rating }}">
+                                {{ rating }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>Genre</h4>
+                        <span class="toggle-arrow" id="genreArrow" onclick="toggleFilters('genreFilters')">▼</span>
+                    </div>
+                    <div id="genreFilters">
+                        {% for genre in genres %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="genre" value="{{ genre.mal_id }}" id="genre-{{ genre.mal_id }}" {% if genre.mal_id|stringformat:"s" in selected_genres %}checked{% endif %}>
+                            <label class="form-check-label" for="genre-{{ genre.mal_id }}">
+                                {{ genre.name }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </form>
+        </div>
+
+        <div class="col-md-9">
+            <!-- Anime List -->
+            <div class="row">
+                {% for anime in page_obj %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <a href="{% url 'anime_detail' anime.mal_id %}">
+                            <img src="{{ anime.images.jpg.image_url }}" class="card-img-top" alt="{{ anime.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ anime.title }}</h5>
+                                <p class="card-text">
+                                    Score: {{ anime.score }}<br>
+                                    Members: {{ anime.members }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p>No results found for "{{ search_query }}".</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?q={{ search_query }}&page=1{% for rating in selected_age_ratings %}&age_rating={{ rating }}{% endfor %}{% for genre in selected_genres %}&genre={{ genre }}{% endfor %}">« first</a>
+                        <a href="?q={{ search_query }}&page={{ page_obj.previous_page_number }}{% for rating in selected_age_ratings %}&age_rating={{ rating }}{% endfor %}{% for genre in selected_genres %}&genre={{ genre }}{% endfor %}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?q={{ search_query }}&page={{ page_obj.next_page_number }}{% for rating in selected_age_ratings %}&age_rating={{ rating }}{% endfor %}{% for genre in selected_genres %}&genre={{ genre }}{% endfor %}">next</a>
+                        <a href="?q={{ search_query }}&page={{ page_obj.paginator.num_pages }}{% for rating in selected_age_ratings %}&age_rating={{ rating }}{% endfor %}{% for genre in selected_genres %}&genre={{ genre }}{% endfor %}">last »</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleFilters(filterId) {
+        const filters = document.getElementById(filterId);
+        const arrow = document.getElementById(`${filterId.replace('Filters', '')}Arrow`);
+        if (filters.style.display === 'none') {
+            filters.style.display = 'block';
+            arrow.textContent = '▼';
+        } else {
+            filters.style.display = 'none';
+            arrow.textContent = '►';
+        }
+    }
+</script>
+{% endblock %}

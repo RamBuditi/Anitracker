@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ anime.title }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #e91e63;
+            --background-color: #1a1a2e;
+            --card-color: #262640;
+            --text-color: #ffffff;
+            --nav-background: #2d1b36;
+            --accent-color: #ff2e63;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(156, 39, 176, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(233, 30, 99, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .anime-details {
+            background-color: var(--card-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .anime-details h1 {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .anime-details img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .synopsis {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .synopsis h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .review-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .recommendation {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .recommends {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .mixed {
+            background-color: #ffd700;
+            color: #000;
+        }
+
+        .not_recommended {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .review-form {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .review-form input[type="text"],
+        .review-form textarea,
+        .review-form select {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form input {
+            padding: 12px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .search-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-film"></i>Anitracker
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'top_anime' %}">Top Anime</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'users:profile' user.id %}">Profile</a>
+                    <a href="{% url 'users:logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'users:login' %}">Login</a>
+                    <a href="{% url 'users:signup' %}">Sign Up</a>
+                {% endif %}
+            </div>
+            <form class="search-form" method="GET" action="{% url 'search_results' %}" autocomplete="off">
+                <input type="text" name="q" placeholder="Search anime..." value="{{ search_query }}">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="anime-details">
+            {% if error %}
+                <div class="error-message">
+                    <p>{{ error }}</p>
+                </div>
+            {% elif anime %}
+                <h1>{{ anime.title }}</h1>
+                {% if anime.images.jpg.large_image_url %}
+                    <img src="{{ anime.images.jpg.large_image_url }}" alt="{{ anime.title }}">
+                {% endif %}
+                
+                
+            
+                    {% if anime.synopsis %}
+                        <div class="synopsis">
+                            <h3>Synopsis</h3>
+                            <p>{{ anime.synopsis }}</p>
+                        </div>
+                    {% endif %}
+            
+                    {% if anime.trailer.embed_url %}
+                        <div class="trailer">
+                            <h2>Trailer</h2>
+                            <iframe width="560" height="315" src="{{ anime.trailer.embed_url }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <p>Anime not found.</p>
+                {% endif %}           
+                    <div class="reviews-section">
+                        <h2>Reviews</h2>
+                        
+                        {% if user.is_authenticated %}
+                            {% if current_entry %}
+                                <div class="write-review">
+                                    <h3>Write a Review</h3>
+                                    <form method="post" class="review-form">
+                                        {% csrf_token %}
+                                        {{ review_form.as_p }}
+                                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                                    </form>
+                                </div>
+                            {% else %}
+                                <p>You need to add this anime to your list before writing a review.</p>
+                            {% endif %}
+                        
+                            {% if user_review %}
+                                <div class="user-review">
+                                    <h3>Your Review</h3>
+                                    <div class="review-card">
+                                        <div class="review-header">
+                                            <span class="rating">Rating: {{ current_entry.rating }}/10</span>
+                                            <span class="episodes">Episodes Watched: {{ current_entry.episodes_watched }}</span>
+                                            <span class="recommendation {{ user_review.recommendation }}">
+                                                {{ user_review.get_recommendation_display }}
+                                            </span>
+                                        </div>
+                                        <div class="review-content">
+                                            {{ user_review.review_text }}
+                                        </div>
+                                        <div class="review-footer">
+                                            <span class="date">Last updated: {{ user_review.updated_at|date:"F j, Y" }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p>Please <a href="{% url 'users:login' %}">log in</a> to write a review.</p>
+                        {% endif %}
+                        
+                        {% if other_reviews %}
+                            <div class="other-reviews">
+                                <h3>Community Reviews</h3>
+                                {% for review in other_reviews %}
+                                    <div class="review-card">
+                                        <div class="review-header">
+                                            <span class="username">{{ review.user_profile.name }}</span>
+                                            <span class="rating">Rating: {{ review.anime_entry.rating }}/10</span>
+                                            <span class="episodes">Episodes Watched: {{ review.anime_entry.episodes_watched }}</span>
+                                            <span class="recommendation {{ review.recommendation }}">
+                                                {{ review.get_recommendation_display }}
+                                            </span>
+                                        </div>
+                                        <div class="review-content">
+                                            {{ review.review_text }}
+                                        </div>
+                                        <div class="review-footer">
+                                            <span class="date">{{ review.updated_at|date:"F j, Y" }}</span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const statusSelect = document.getElementById('status');
+                    const episodesWatchedInput = document.getElementById('episodes_watched');
+                    const totalEpisodes = parseInt(document.getElementById('totalEpisodes').value, 10);
+                    const episodesWatchedDisplay = document.getElementById('episodesWatchedDisplay');
+            
+                    function updateEpisodesWatchedDisplay() {
+                        const episodesWatched = episodesWatchedInput.value;
+                        episodesWatchedDisplay.textContent = `${episodesWatched}/${totalEpisodes}`;
+                    }
+            
+                    // Update episodes watched display on input change
+                    episodesWatchedInput.addEventListener('input', updateEpisodesWatchedDisplay);
+            
+                    // Set max episodes when "Completed" is selected and handle form submission
+                    document.getElementById('animeStatusForm').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const selectedStatus = statusSelect.value;
+                        const form = this;
+                        const formData = new FormData(form);
+            
+                        if (selectedStatus === 'completed' && !isNaN(totalEpisodes)) {
+                            formData.set('episodes_watched', totalEpisodes);
+                        }
+            
+                        fetch('{% url "users:update_anime_status" %}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            const messageDiv = document.getElementById('statusMessage');
+                            messageDiv.textContent = data.message;
+                            messageDiv.className = `message ${data.status === 'success' ? 'success' : 'error'}`;
+                            if (data.status === 'success') {
+                                // Update the displayed episodes watched count after successful update
+                                if (selectedStatus === 'completed' && !isNaN(totalEpisodes)) {
+                                    episodesWatchedDisplay.textContent = `${totalEpisodes}/${totalEpisodes}`;
+                                }
+                                setTimeout(() => window.location.reload(), 1000);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            const messageDiv = document.getElementById('statusMessage');
+                            messageDiv.className = 'message error';
+                            messageDiv.textContent = 'An error occurred while updating status.';
+                        });
+                    });
+                });
+            </script>
+    </div>
+</body>
+</html>
+
+

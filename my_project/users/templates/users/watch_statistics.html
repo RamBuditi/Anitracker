@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Statistics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #e91e63;
+            --background-color: #1a1a2e;
+            --card-color: #262640;
+            --text-color: #ffffff;
+            --nav-background: #2d1b36;
+            --accent-color: #ff2e63;
+            --filter-background: #2d1b36;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(156, 39, 176, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(233, 30, 99, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.3);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form input {
+            padding: 12px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background-color: #ff4081;
+        }
+
+        h2 {
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .list-group-item {
+            background-color: var(--card-color);
+            border: none;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .img-fluid {
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .list-group-item h5 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .list-group-item p {
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .list-group-item .row {
+            align-items: center;
+        }
+    </style>
+</head>
+
+<!-- Header -->
+<div class="container">
+    <div class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-film"></i>Anitracker
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'top_anime' %}">Top Anime</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' user.id %}">Profile</a>
+                <a href="{% url 'users:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'users:login' %}">Login</a>
+                <a href="{% url 'users:signup' %}">Sign Up</a>
+            {% endif %}
+        </div>
+        <form class="search-form" method="GET" action="{% url 'search_results' %}" autocomplete="off">
+            <input type="text" name="q" placeholder="Search anime..." value="{{ search_query }}">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+<div>
+    <div class="container mt-4">
+        <h2 class="mb-4">Watch Statistics</h2>
+    
+        <!-- Debug Information -->
+        <!-- <div class="debug-info mb-4" style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+            <h4>Debug Information</h4>
+            <p>Total Entries in Database: {{ debug_info.total_entries }}</p>
+            <p>Unique Anime IDs: {{ debug_info.unique_anime_ids }}</p>
+            <p>Successfully Fetched Anime: {{ debug_info.successful_fetches }}</p>
+            {% if debug_info.missing_anime_ids %}
+                <p>Missing Anime IDs: {{ debug_info.missing_anime_ids|join:", " }}</p>
+            {% endif %}
+            <h5>Entries by Status:</h5>
+            {% for status, count in debug_info.entries_by_status.items %}
+                <p>{{ status }}: {{ count }}</p>
+            {% endfor %}
+        </div> -->
+    
+        <!-- Overall Statistics -->
+        <div class="stats-summary mb-4">
+            <h3>Overall Statistics</h3>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <p>Total Completed: {{ stats.watched_count }}</p>
+                        <p>Days Watched: {{ stats.total_days }}</p>
+                        <p>Currently Watching: {{ stats.watching_count }}</p>
+                        <p>Plan to Watch: {{ stats.planned_count }}</p>
+                        <p>Dropped: {{ stats.dropped_count }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Anime Lists -->
+        {% for status, anime_list in categorized_anime.items %}
+            <h3>{{ status }} ({{ anime_list|length }})</h3>
+            <div class="list-group mb-4">
+                {% if anime_list %}
+                    {% for item in anime_list %}
+                        <div class="list-group-item {% if not item.details.images.jpg.image_url %}bg-light{% endif %}">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {% if item.details.images.jpg.image_url %}
+                                        <img src="{{ item.details.images.jpg.image_url }}" alt="{{ item.details.title }}" class="img-fluid">
+                                    {% else %}
+                                        <div class="text-center p-3 bg-secondary text-white">
+                                            <small>Image Unavailable</small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-10">
+                                    <a href="{% url 'users:anime_detail' item.details.mal_id %}" class="anime-link">
+                                        <h5>
+                                            {{ item.details.title }}
+                                            {% if not item.details.images.jpg.image_url %}
+                                                <small class="text-muted">(Details temporarily unavailable)</small>
+                                            {% endif %}
+                                        </h5>
+                                    </a>
+                                    <p>Score: 
+                                        {% if item.entry.rating %}
+                                            {{ item.entry.rating }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </p>
+                                    <p>Progress: {{ item.entry.episodes_watched }} / 
+                                        {% if item.details.episodes %}
+                                            {{ item.details.episodes }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="list-group-item">No anime in this category</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock %}

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anitracker</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #e91e63;
+            --background-color: #1a1a2e;
+            --card-color: #262640;
+            --text-color: #ffffff;
+            --nav-background: #16213e;
+            --accent-color: #ff2e63;
+            --gradient-start: #9c27b0;
+            --gradient-end: #e91e63;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(156, 39, 176, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(233, 30, 99, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.3);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form input {
+            padding: 12px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background-color: #ff4081;
+        }
+
+        .season-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            background-color: var(--nav-background);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .season-navigation a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background-color: rgba(156, 39, 176, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .season-navigation a:hover {
+            background-color: rgba(156, 39, 176, 0.4);
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .anime-card {
+            display: block;
+            background-color: var(--card-color);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            text-decoration: none;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+        }
+
+        .anime-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        .anime-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .anime-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .anime-card .title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .pagination a, .pagination span {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            background-color: var(--card-color);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-film"></i>Anitracker
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'top_anime' %}">Top Anime</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'users:profile' user.id %}">Profile</a>
+                    <a href="{% url 'users:logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'users:login' %}">Login</a>
+                    <a href="{% url 'users:signup' %}">Sign Up</a>
+                {% endif %}
+            </div>
+            <form class="search-form" method="GET" action="{% url 'search_results' %}" autocomplete="off">
+                <input type="text" name="q" placeholder="Search anime..." value="{{ search_query }}">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+
+        <div class="season-navigation">
+            <a href="?season_page={{ prev_season.0 }}/{{ prev_season.1 }}" class="prev-season">
+                ← {{ prev_season.0|capfirst }} {{ prev_season.1 }}
+            </a>
+            {% if season_info %}
+                <h2>{{ season_info.season|capfirst }} {{ season_info.year }}</h2>
+            {% endif %}
+            <a href="?season_page={{ next_season.0 }}/{{ next_season.1 }}" class="next-season">
+                {{ next_season.0|capfirst }} {{ next_season.1 }} →
+            </a>
+        </div>
+
+        <div class="anime-grid">
+            {% for anime in page_obj %}
+            <a href="{% url 'anime_detail' anime.mal_id %}" class="anime-card">
+                <img src="{{ anime.images.jpg.image_url }}" alt="{{ anime.title }} Image">
+                <div class="title">{{ anime.title }}</div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{% if season_info %}&season_page={{ season_info.season|lower }}/{{ season_info.year }}{% endif %}">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}{% if season_info %}&season_page={{ season_info.season|lower }}/{{ season_info.year }}{% endif %}">Previous</a>
+            {% endif %}
+
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if season_info %}&season_page={{ season_info.season|lower }}/{{ season_info.year }}{% endif %}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if season_info %}&season_page={{ season_info.season|lower }}/{{ season_info.year }}{% endif %}">Last</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
