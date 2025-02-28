@@ -65,12 +65,6 @@ Anitracker is a web application that allows anime enthusiasts to search, track, 
 - **Database**: SQLite (development)
 
 
-## Getting Started
-
-### Prerequisites
-- Python 3.8+
-- pip (Python package installer)
-- Virtual environment (recommended)
 
 ## Usage
 
