@@ -1,19 +1,25 @@
 # Anitracker
 
 Anitracker is a web application that allows anime enthusiasts to search, track, and rate their favorite anime shows. Built with Django and powered by the Jikan API, Anitracker provides a comprehensive platform for managing your anime watching experience.
+
 ![Screenshot 2025-02-28 095556](https://github.com/user-attachments/assets/7bd7b67a-f830-4bca-9013-315840d171bd)
 
 ## Features
 
 ### Anime Tracking
 - **Search Functionality**: Easily find anime titles using the powerful search feature
+- 
+- ![Screenshot 2025-02-28 100144](https://github.com/user-attachments/assets/c760c88d-4f8b-41bf-86ce-0d50be8c8e34)
+- 
 - **Episode Tracking**: Keep track of which episodes you've watched for each anime
 - **Rating System**: Rate anime on a scale to remember your favorites
 - **Review Writing**: Share your thoughts by writing detailed reviews
 
+
 ### Seasonal Anime
 - Browse anime by season to discover new shows
 - Stay up-to-date with the latest releases
+
 
 ### User Profiles
 - **Watch Statistics**: View comprehensive statistics about your watching habits
