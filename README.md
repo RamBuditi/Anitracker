@@ -27,7 +27,7 @@ Anitracker is a web application that allows anime enthusiasts to search, track, 
 
 
 ### Seasonal Anime
-![ani2](https://github.com/user-attachments/assets/4cc50e9c-69f4-41a4-a79b-0c18800c6b36)
+-![ani2](https://github.com/user-attachments/assets/4cc50e9c-69f4-41a4-a79b-0c18800c6b36)
 - Browse anime by season to discover new shows
 - Stay up-to-date with the latest releases
 ![Screenshot 2025-02-28 101115](https://github.com/user-attachments/assets/ff3bf80d-5ce5-4166-9677-92abfb2e071f)
